@@ -24,28 +24,33 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Course", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Top_ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Top_ID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
+                        .IsUnicode(true)
                         .HasColumnType("NVarChar(100)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
+                        .IsUnicode(false)
                         .HasColumnType("VarChar(20)");
 
-                    b.Property<int>("Top_ID")
-                        .HasColumnType("int");
+                    b.HasKey("Top_ID");
 
-                    b.HasKey("ID");
-
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Course_Inst", b =>
@@ -66,35 +71,36 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ins_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ins_id"));
 
                     b.Property<DateTime>("HiringDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("HireDate");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("ins_id")
-                        .HasColumnType("int");
+                    b.HasKey("ins_id");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Instructor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Dept_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dept_ID"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -104,23 +110,24 @@ namespace EF_01_.Context.Migrations
                     b.Property<decimal>("Bouns")
                         .HasColumnType("decimal(12,2)");
 
-                    b.Property<int>("Dept_ID")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("HourRate")
                         .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
+                        .IsUnicode(false)
                         .HasColumnType("VarChar(20)");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(12,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Dept_ID");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Stud_Course", b =>
@@ -141,11 +148,11 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Dep_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dep_Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -155,22 +162,22 @@ namespace EF_01_.Context.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dep_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VarChar(20)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("LName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VarChar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Dep_Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Topic", b =>
@@ -188,7 +195,7 @@ namespace EF_01_.Context.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Topics", (string)null);
                 });
 #pragma warning restore 612, 618
         }
