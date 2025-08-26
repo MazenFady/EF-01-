@@ -28,11 +28,10 @@ namespace EF_01_.Context.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "VarChar(20)", maxLength: 20, nullable: false),
+                    Description = table.Column<string>(type: "NVarChar(100)", maxLength: 100, nullable: false),
                     Top_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +45,7 @@ namespace EF_01_.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ins_id = table.Column<int>(type: "int", nullable: false),
                     HiringDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -61,11 +60,11 @@ namespace EF_01_.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bouns = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HourRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Name = table.Column<string>(type: "VarChar(20)", maxLength: 20, nullable: false),
+                    Bouns = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
+                    Address = table.Column<string>(type: "NVarChar(100)", maxLength: 100, nullable: false),
+                    HourRate = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
                     Dept_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -92,10 +91,10 @@ namespace EF_01_.Context.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    FName = table.Column<string>(type: "VarChar(20)", maxLength: 20, nullable: false),
+                    LName = table.Column<string>(type: "VarChar(20)", maxLength: 20, nullable: false),
+                    Address = table.Column<string>(type: "NVarChar(100)", maxLength: 100, nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: true),
                     Dep_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,7 +108,7 @@ namespace EF_01_.Context.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {

@@ -27,7 +27,7 @@ namespace EF_01_.Context
         {
             modelBuilder.Entity<Course_Inst>(entity =>
             {
-                entity.HasKey(e => new { e.inst_ID, e.Course_ID }); 
+                entity.HasKey(e => new { e.inst_ID, e.Course_ID });
                 entity.Property(e => e.evaluate);
             });
 
@@ -37,9 +37,9 @@ namespace EF_01_.Context
                 entity.Property(e => e.Grade);
 
             });
-            
+
         }
     }
 
-
 }
+
