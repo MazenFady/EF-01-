@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace EF_01_.Models
 {
+    [PrimaryKey(nameof(stud_ID), nameof(Course_ID))]
     internal class Stud_Course
     {
-        [Key]
+        
         public int stud_ID { get; set; }
-        [Key]
+     
         public  int Course_ID { get; set; }
         public int Grade { get; set; } 
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_01_.Context.Migrations
 {
     [DbContext(typeof(ITIContext))]
-    [Migration("20250826205032_InitialCreate")]
+    [Migration("20250826222348_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,29 +27,33 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Course", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Top_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Top_ID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(true)
+                        .HasColumnType("NVarChar(100)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Top_ID")
+                    b.Property<int>("ID")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("VarChar(20)");
 
-                    b.ToTable("Courses");
+                    b.HasKey("Top_ID");
+
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Course_Inst", b =>
@@ -70,58 +74,63 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ins_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ins_id"));
 
                     b.Property<DateTime>("HiringDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("HireDate");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("ins_id")
-                        .HasColumnType("int");
+                    b.HasKey("ins_id");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Instructor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Dept_ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dept_ID"));
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("NVarChar(100)");
 
                     b.Property<decimal>("Bouns")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Dept_ID")
-                        .HasColumnType("int");
+                        .HasColumnType("decimal(12,2)");
 
                     b.Property<decimal>("HourRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("VarChar(20)");
 
                     b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(12,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Dept_ID");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Stud_Course", b =>
@@ -142,33 +151,36 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Dep_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dep_Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("NVarChar(100)");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dep_Id")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("FName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("VarChar(20)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("LName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("VarChar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Dep_Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("EF_01_.Models.Topic", b =>
@@ -181,11 +193,12 @@ namespace EF_01_.Context.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Topics", (string)null);
                 });
 #pragma warning restore 612, 618
         }
