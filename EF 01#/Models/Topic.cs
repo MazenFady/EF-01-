@@ -14,7 +14,8 @@ namespace EF_01_.Models
         public int ID { get; set; }
         [Required]
         [MaxLength(20)]
-        public string Name { get; set; } 
+        public string Name { get; set; }
 
+        public ICollection<Course> Courses { get; set; }
     }
 }

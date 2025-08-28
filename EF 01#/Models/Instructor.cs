@@ -27,6 +27,12 @@ namespace EF_01_.Models
         [Column(TypeName = "decimal(12,2)")]
         public decimal HourRate { get; set; }
 
-        public int Dept_ID { get; set; }
+        [ForeignKey(nameof(Department))]
+        public int? DepID { get; set; }
+        public Department? Department { get; set; }
+
+        public ICollection<Course_Inst> course_Insts { get; set; }
+        public ICollection<Department> ManagedDepartments { get; set; }
+
     }
 }

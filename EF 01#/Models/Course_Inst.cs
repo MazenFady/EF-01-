@@ -16,6 +16,10 @@ namespace EF_01_.Models
       
         public int Course_ID { get; set; }
 
+        public Course? course { get; set; }
+
+        public Instructor? instructor { get; set; }
+
         public int evaluate { get; set; }
     }
 }

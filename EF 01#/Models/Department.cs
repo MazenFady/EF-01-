@@ -14,11 +14,17 @@ namespace EF_01_.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(20)]
-       
+
         public string Name { get; set; } = null!;
 
-        public int ins_id { get; set; }
-        
+        [ForeignKey(nameof(Manager))]
+        public int? ins_id { get; set; }
+        public Instructor? Manager { get; set; }
+
         public DateTime HiringDate { get; set; }
 
-}   }
+        public ICollection<Student> Students { get; set; }
+
+        public ICollection<Instructor> Instructors { get; set; }
+    }
+}
