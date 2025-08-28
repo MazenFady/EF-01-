@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EF_01_.Context.Migrations
+namespace EF_01_.Migrations
 {
     [DbContext(typeof(ITIContext))]
     partial class ITIContextModelSnapshot : ModelSnapshot
@@ -24,11 +24,11 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Course", b =>
                 {
-                    b.Property<int>("Top_ID")
+                    b.Property<int>("TopID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Top_ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TopID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -48,7 +48,12 @@ namespace EF_01_.Context.Migrations
                         .IsUnicode(false)
                         .HasColumnType("VarChar(20)");
 
-                    b.HasKey("Top_ID");
+                    b.Property<int?>("TopicID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TopID");
+
+                    b.HasIndex("TopicID");
 
                     b.ToTable("Courses", (string)null);
                 });
@@ -61,10 +66,20 @@ namespace EF_01_.Context.Migrations
                     b.Property<int>("Course_ID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("courseTopID")
+                        .HasColumnType("int");
+
                     b.Property<int>("evaluate")
                         .HasColumnType("int");
 
+                    b.Property<int?>("instructorDepID")
+                        .HasColumnType("int");
+
                     b.HasKey("inst_ID", "Course_ID");
+
+                    b.HasIndex("courseTopID");
+
+                    b.HasIndex("instructorDepID");
 
                     b.ToTable("Course_Insts");
                 });
@@ -72,10 +87,7 @@ namespace EF_01_.Context.Migrations
             modelBuilder.Entity("EF_01_.Models.Department", b =>
                 {
                     b.Property<int>("ins_id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ins_id"));
 
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2")
@@ -96,11 +108,11 @@ namespace EF_01_.Context.Migrations
 
             modelBuilder.Entity("EF_01_.Models.Instructor", b =>
                 {
-                    b.Property<int>("Dept_ID")
+                    b.Property<int>("DepID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dept_ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepID"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -109,6 +121,9 @@ namespace EF_01_.Context.Migrations
 
                     b.Property<decimal>("Bouns")
                         .HasColumnType("decimal(12,2)");
+
+                    b.Property<int?>("Departmentins_id")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("HourRate")
                         .HasColumnType("decimal(12,2)");
@@ -125,7 +140,9 @@ namespace EF_01_.Context.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(12,2)");
 
-                    b.HasKey("Dept_ID");
+                    b.HasKey("DepID");
+
+                    b.HasIndex("Departmentins_id");
 
                     b.ToTable("Instructors", (string)null);
                 });
@@ -141,18 +158,28 @@ namespace EF_01_.Context.Migrations
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
+                    b.Property<int?>("courseTopID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("studentId")
+                        .HasColumnType("int");
+
                     b.HasKey("stud_ID", "Course_ID");
+
+                    b.HasIndex("courseTopID");
+
+                    b.HasIndex("studentId");
 
                     b.ToTable("Stud_Courses");
                 });
 
             modelBuilder.Entity("EF_01_.Models.Student", b =>
                 {
-                    b.Property<int>("Dep_Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dep_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -162,20 +189,22 @@ namespace EF_01_.Context.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DepId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VarChar(20)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<string>("LName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VarChar(20)");
 
-                    b.HasKey("Dep_Id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepId");
 
                     b.ToTable("Students", (string)null);
                 });
@@ -196,6 +225,99 @@ namespace EF_01_.Context.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Topics", (string)null);
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Course", b =>
+                {
+                    b.HasOne("EF_01_.Models.Topic", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("TopicID");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Course_Inst", b =>
+                {
+                    b.HasOne("EF_01_.Models.Course", "course")
+                        .WithMany("course_Insts")
+                        .HasForeignKey("courseTopID");
+
+                    b.HasOne("EF_01_.Models.Instructor", "instructor")
+                        .WithMany("course_Insts")
+                        .HasForeignKey("instructorDepID");
+
+                    b.Navigation("course");
+
+                    b.Navigation("instructor");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Department", b =>
+                {
+                    b.HasOne("EF_01_.Models.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("ins_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Instructor", b =>
+                {
+                    b.HasOne("EF_01_.Models.Department", null)
+                        .WithMany("Instructors")
+                        .HasForeignKey("Departmentins_id");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Stud_Course", b =>
+                {
+                    b.HasOne("EF_01_.Models.Course", "course")
+                        .WithMany("Stud_Courses")
+                        .HasForeignKey("courseTopID");
+
+                    b.HasOne("EF_01_.Models.Student", "student")
+                        .WithMany("Stud_Courses")
+                        .HasForeignKey("studentId");
+
+                    b.Navigation("course");
+
+                    b.Navigation("student");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Student", b =>
+                {
+                    b.HasOne("EF_01_.Models.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepId");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Course", b =>
+                {
+                    b.Navigation("Stud_Courses");
+
+                    b.Navigation("course_Insts");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Department", b =>
+                {
+                    b.Navigation("Instructors");
+
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Instructor", b =>
+                {
+                    b.Navigation("course_Insts");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Student", b =>
+                {
+                    b.Navigation("Stud_Courses");
+                });
+
+            modelBuilder.Entity("EF_01_.Models.Topic", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

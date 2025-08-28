@@ -23,7 +23,10 @@ namespace EF_01_.Models
         [Column(TypeName = "NVarChar(100)")]
 
         public string Description { get; set; }
-        
-        public int Top_ID { get; set; }
+        [ForeignKey(nameof(Topic))]
+        public int TopID { get; set; }
+
+        public ICollection<Stud_Course> Stud_Courses { get; set; }
+        public ICollection<Course_Inst> course_Insts { get; set; }
     }
 }

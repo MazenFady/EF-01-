@@ -14,14 +14,17 @@ namespace EF_01_.Models
     {
         [Key]
         public int Id { get; set; }
+
         [MaxLength(20)]
         [Required]
         [Column(TypeName = "VarChar(20)")]
-        public string FName { get; set; } 
+        public string FName { get; set; }
+
         [MaxLength(20)]
         [Required]
         [Column(TypeName = "VarChar(20)")]
-        public string LName { get; set; } 
+        public string LName { get; set; }
+        
         [MaxLength(100)]
         [Column(TypeName = "NVarChar(100)")]
         [Required]
@@ -29,6 +32,11 @@ namespace EF_01_.Models
 
         public int? Age { get; set; }
 
-        public int Dep_Id { get; set; }
+        [ForeignKey(nameof(Department))]
+        public int? DepId { get; set; }
+        public Department? Department { get; set; }
+        public ICollection<Stud_Course> Stud_Courses { get; set; }
+
+     
     }
 }

@@ -22,7 +22,7 @@ namespace Demo
                     LName = "Fady",
                     Address = "Cairo",
                     Age = 22,
-                    Dep_Id = 1
+                    DepId = 1
                 };
                 cont.Students.Add(newStudent);
                 cont.SaveChanges();
@@ -32,7 +32,7 @@ namespace Demo
                 Console.WriteLine("All Students");
                 foreach (var S in students)
                 {
-                    Console.WriteLine($"ID :{S.Id} Fname :{S.FName} Lname : {S.LName} Address: {S.Address} Age : {S.Age} Dep_Id : {S.Dep_Id} ");
+                    Console.WriteLine($"ID :{S.Id} Fname :{S.FName} Lname : {S.LName} Address: {S.Address} Age : {S.Age} ");
                 }
 
                 var studentupdate = cont.Students.FirstOrDefault(s => s.Id == 1);
